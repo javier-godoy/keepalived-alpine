@@ -1,4 +1,5 @@
-FROM alpine:3.13
+ARG ALPINE_TAG=latest
+FROM alpine:${ALPINE_TAG}
 
 #git and OpenSSH
 RUN apk --no-cache add git openssh
@@ -9,7 +10,8 @@ RUN apk --no-cache add autoconf make automake gcc libc-dev
 #Project dependencies
 RUN apk --no-cache add iptables-dev ipset-dev musl-dev openssl-dev
 
-RUN git clone https://github.com/acassen/keepalived.git
+ARG KEEPALIVED_TAG=master
+RUN git clone --single-branch --branch ${KEEPALIVED_TAG} https://github.com/acassen/keepalived.git
 
 RUN cd keepalived && \
    # git checkout tags/v2.2.2 -b local && \
